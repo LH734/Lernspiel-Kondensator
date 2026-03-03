@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingenieurbüro für Kondensatortechnik</title>
+<style>
+:root {
+  --blue-900: #1e3a5f;
+  --blue-700: #2c5f8a;
+  --blue-500: #3b82f6;
+  --blue-100: #dbeafe;
+  --blue-50: #eff6ff;
+  --green-600: #16a34a;
+  --green-100: #dcfce7;
+  --red-600: #dc2626;
+  --red-100: #fee2e2;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-400: #94a3b8;
+  --gray-600: #475569;
+  --gray-800: #1e293b;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e0e8f0 100%);
+  color: var(--gray-800);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+/* ===== START SCREEN ===== */
+#startScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 40px 20px;
+}
+#startScreen h1 {
+  font-size: 2em;
+  color: var(--blue-900);
+  margin-bottom: 8px;
+}
+#startScreen .subtitle {
+  font-size: 1.1em;
+  color: var(--gray-600);
+  margin-bottom: 32px;
+}
+.start-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px 40px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  max-width: 560px;
+  width: 100%;
+}
+.start-card p {
+  font-size: 1.05em;
+  color: var(--gray-600);
+  margin-bottom: 24px;
+  text-align: left;
+  line-height: 1.7;
+}
+.expert-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  text-align: left;
+}
+.expert-toggle input { width: 18px; height: 18px; cursor: pointer; }
+.expert-toggle .et-text strong { color: var(--blue-700); }
+.expert-toggle .et-text span { display: block; font-size: 0.88em; color: var(--gray-600); }
+.btn {
+  display: inline-block;
+  padding: 14px 40px;
+  font-size: 1.1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+  background: var(--blue-500);
+  color: white;
+}
+.btn-primary:hover { background: var(--blue-700); }
+.btn-primary:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+  transform: none;
+}
+/* ===== PROGRESS BAR ===== */
+.progress-bar-wrap {
+  background: white;
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.progress-label {
+  font-weight: 600;
+  color: var(--blue-700);
+  white-space: nowrap;
+  font-size: 0.95em;
+}
+.progress-track {
+  flex: 1;
+  height: 10px;
+  background: var(--gray-200);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--blue-500);
+  border-radius: 5px;
+  transition: width 0.4s ease;
+}
+.progress-score {
+  font-size: 0.88em;
+  color: var(--gray-600);
+  white-space: nowrap;
+}
+/* ===== TASK CARD ===== */
+.task-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border-left: 5px solid var(--blue-500);
+}
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.task-title {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--blue-900);
+}
+.expert-timer {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-weight: 600;
+  font-size: 0.95em;
+  color: var(--blue-700);
+  white-space: nowrap;
+}
+.expert-timer.warning { background: #fef3c7; border-color: #fde68a; color: #92400e; }
+.expert-timer.danger { background: var(--red-100); border-color: #fca5a5; color: var(--red-600); }
+.customer-intro {
+  background: var(--gray-50);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-style: italic;
+  color: var(--gray-600);
+  font-size: 0.95em;
+  border-left: 3px solid var(--gray-400);
+}
+.customer-intro strong { color: var(--gray-800); font-style: normal; }
+.task-text {
+  font-size: 1.05em;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  color: var(--gray-800);
+}
+.given-box {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.98em;
+  margin-bottom: 20px;
+}
+/* ===== INPUT AREA ===== */
+.input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.input-row label {
+  font-weight: 600;
+  color: var(--blue-700);
+  min-width: 70px;
+}
+.input-row input[type="number"] {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 14px;
+  font-size: 1.05em;
+  border: 2px solid var(--gray-200);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-row input[type="number"]:focus { border-color: var(--blue-500); }
+.input-row select {
+  padding: 10px 14px;
+  font-size: 1.05em;
+  border: 2px solid var(--gray-200);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  outline: none;
+  min-width: 90px;
+}
+.input-row select:focus { border-color: var(--blue-500); }
+.btn-submit {
+  padding: 10px 28px;
+  font-size: 1.05em;
+}
+/* ===== HINTS ===== */
+.hints-area { margin-top: 8px; }
+.hint-buttons { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.btn-hint {
+  padding: 8px 18px;
+  font-size: 0.92em;
+  background: white;
+  border: 2px solid var(--blue-500);
+  color: var(--blue-500);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-hint:hover { background: var(--blue-50); }
+.btn-hint:disabled { border-color: var(--gray-400); color: var(--gray-400); cursor: not-allowed; background: var(--gray-100); }
+.hint-text {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-top: 8px;
+  font-size: 0.98em;
+  color: #92400e;
+  display: none;
+}
+.hint-text.visible { display: block; }
+/* ===== FEEDBACK ===== */
+.feedback-inline {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 1.02em;
+  font-weight: 500;
+  display: none;
+}
+.feedback-inline.success {
+  display: block;
+  background: var(--green-100);
+  border: 1px solid #86efac;
+  color: #15803d;
+}
+.feedback-inline.unit-error {
+  display: block;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+/* ===== SOLUTION MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+  align-items: flex-start;
+  justify-content: center;
+}
+.modal-overlay.visible {
+  display: flex;
+}
+.modal-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 700px;
+  width: 100%;
+  margin: 40px auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  border-top: 5px solid var(--red-600);
+}
+.modal-card h2 {
+  color: var(--red-600);
+  margin-bottom: 8px;
+  font-size: 1.3em;
+}
+.modal-subtitle {
+  color: var(--gray-600);
+  margin-bottom: 20px;
+  font-size: 0.95em;
+}
+.solution-steps {
+  background: var(--gray-50);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.solution-step {
+  padding: 6px 0;
+  font-size: 1.05em;
+  line-height: 1.7;
+  border-bottom: 1px dotted var(--gray-200);
+  font-family: 'Courier New', monospace;
+}
+.solution-step:last-child { border-bottom: none; }
+.solution-step.result {
+  font-weight: 700;
+  color: var(--blue-700);
+  font-size: 1.1em;
+  border-bottom: none;
+  margin-top: 6px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.countdown-text {
+  font-weight: 600;
+  color: var(--gray-600);
+  font-size: 1.02em;
+}
+/* ===== END SCREEN ===== */
+#endScreen {
+  min-height: 100vh;
+  display: none;
+  padding: 40px 20px;
+}
+#endScreen.visible { display: block; }
+.end-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.end-card h1 {
+  color: var(--blue-900);
+  margin-bottom: 8px;
+  font-size: 1.5em;
+}
+.end-score {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: var(--blue-500);
+  margin: 16px 0;
+}
+.end-rating {
+  font-size: 1.15em;
+  color: var(--gray-600);
+  margin-bottom: 24px;
+}
+.end-section {
+  margin-bottom: 20px;
+}
+.end-section h3 {
+  color: var(--blue-700);
+  margin-bottom: 10px;
+  font-size: 1.05em;
+}
+.error-item {
+  background: var(--red-100);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  font-size: 0.98em;
+}
+.error-item strong { color: var(--red-600); }
+.error-item .correct-answer { color: var(--blue-700); font-weight: 600; }
+.hint-summary {
+  background: var(--blue-50);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 1em;
+}
+/* ===== BONUS SCREEN ===== */
+.bonus-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 700px;
+  margin: 60px auto;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border-left: 5px solid #f59e0b;
+}
+.bonus-card h2 { color: #b45309; margin-bottom: 16px; }
+.bonus-card p { margin-bottom: 16px; font-size: 1.05em; line-height: 1.7; }
+.bonus-card textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px;
+  font-size: 1.02em;
+  border: 2px solid var(--gray-200);
+  border-radius: 8px;
+  font-family: inherit;
+  resize: vertical;
+  margin-bottom: 8px;
+}
+.bonus-note { font-size: 0.88em; color: var(--gray-600); margin-bottom: 20px; font-style: italic; }
+.btn-restart {
+  margin-top: 20px;
+  background: var(--gray-200);
+  color: var(--gray-800);
+  padding: 10px 24px;
+  font-size: 0.95em;
+}
+.btn-restart:hover { background: var(--gray-400); color: white; }
+.hidden { display: none !important; }
+@media (max-width: 600px) {
+  .container { padding: 12px; }
+  .task-card { padding: 20px; }
+  .modal-card { padding: 20px; }
+  #startScreen h1 { font-size: 1.5em; }
+  .start-card { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== START SCREEN ===== -->
+<div id="startScreen">
+  <h1>Ingenieurbüro für Kondensatortechnik</h1>
+  <p class="subtitle">Physik GK 11 &ndash; Kapazität und Feldstärke des Plattenkondensators</p>
+  <div class="start-card">
+    <p>Willkommen im Ingenieurbüro! Als Nachwuchsingenieur erhältst du <strong>10 Aufträge</strong> von verschiedenen Kunden. Jeder Auftrag ist eine Berechnung rund um den Plattenkondensator &ndash; von einfachen Grundlagen bis zu anspruchsvollen Analysen.</p>
+    <p>Bis zu <strong>2 Hinweise</strong> pro Aufgabe helfen dir, wenn du nicht weiterkommst.</p>
+    <label class="expert-toggle" id="expertLabel">
+      <input type="checkbox" id="expertCheck">
+      <div class="et-text">
+        <strong>Expertenmodus</strong>
+        <span>60-Sekunden-Timer pro Aufgabe &amp; Bonusaufgabe am Ende</span>
+      </div>
+    </label>
+    <button class="btn btn-primary" onclick="startGame()">Aufträge starten</button>
+  </div>
+</div>
+
+<!-- ===== GAME SCREEN ===== -->
+<div id="gameScreen" class="container hidden">
+  <div class="progress-bar-wrap">
+    <span class="progress-label" id="progressLabel">Auftrag 1 / 10</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:10%"></div></div>
+    <span class="progress-score" id="progressScore"></span>
+  </div>
+
+  <div class="task-card" id="taskCard">
+    <div class="task-header">
+      <div class="task-title" id="taskTitle"></div>
+      <div class="expert-timer hidden" id="expertTimer">60 s</div>
+    </div>
+    <div class="customer-intro" id="customerIntro"></div>
+    <div class="task-text" id="taskText"></div>
+    <div class="given-box" id="givenBox"></div>
+
+    <div class="input-row">
+      <label for="answerInput">Ergebnis:</label>
+      <input type="number" id="answerInput" step="any" placeholder="Zahlenwert">
+      <select id="unitSelect"></select>
+      <button class="btn btn-primary btn-submit" id="submitBtn" onclick="submitAnswer()">Prüfen</button>
+    </div>
+
+    <div class="hints-area">
+      <div class="hint-buttons">
+        <button class="btn-hint" id="hintBtn1" onclick="showHint(1)">Hinweis 1</button>
+        <button class="btn-hint" id="hintBtn2" onclick="showHint(2)">Hinweis 2</button>
+      </div>
+      <div class="hint-text" id="hintText1"></div>
+      <div class="hint-text" id="hintText2"></div>
+    </div>
+
+    <div class="feedback-inline" id="feedbackInline"></div>
+  </div>
+</div>
+
+<!-- ===== SOLUTION MODAL ===== -->
+<div class="modal-overlay" id="solutionModal">
+  <div class="modal-card">
+    <h2>Leider nicht korrekt</h2>
+    <p class="modal-subtitle" id="modalSubtitle">Hier ist der vollständige Lösungsweg:</p>
+    <div class="solution-steps" id="solutionSteps"></div>
+    <div class="modal-footer">
+      <span class="countdown-text" id="countdownText">Weiter in 10 Sekunden...</span>
+      <button class="btn btn-primary" id="continueBtn" disabled onclick="nextTask()">Weiter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== END SCREEN ===== -->
+<div id="endScreen">
+  <div class="end-card">
+    <h1>Auswertung</h1>
+    <p style="color:var(--gray-600)">Deine Arbeit im Ingenieurbüro ist abgeschlossen.</p>
+    <div class="end-score" id="endScore"></div>
+    <div class="end-rating" id="endRating"></div>
+    <div class="end-section" id="endErrors"></div>
+    <div class="end-section">
+      <div class="hint-summary" id="endHints"></div>
+    </div>
+    <button class="btn btn-primary btn-restart" onclick="location.reload()">Nochmal spielen</button>
+  </div>
+</div>
+
+<!-- ===== BONUS SCREEN ===== -->
+<div id="bonusScreen" class="container hidden">
+  <div class="bonus-card">
+    <h2>Bonusaufgabe (Expertenmodus)</h2>
+    <p>Erkläre in eigenen Worten, warum die elektrische Feldstärke <strong>E = U/d</strong> nicht von der Dielektrizitätszahl &epsilon;<sub>r</sub> abhängt.</p>
+    <textarea id="bonusAnswer" placeholder="Deine Erklärung..."></textarea>
+    <p class="bonus-note">Diese Aufgabe wird nicht automatisch ausgewertet &ndash; diskutiere deine Antwort in der Klasse.</p>
+    <button class="btn btn-primary" onclick="showEndScreen()">Zur Auswertung</button>
+  </div>
+</div>
+
+<script>
+// ===== TASK DATA =====
+const TASKS = [
+  {
+    title: "Auftrag 1 &ndash; Kapazität bestimmen",
+    customer: "Herr Weber, Ladegeräte GmbH",
+    customerIntro: "Wir produzieren Ladegeräte und brauchen die exakte Kapazität eines verbauten Kondensators.",
+    text: "In einem Ladegerät wird ein Kondensator auf eine Spannung von <strong>U = 150 V</strong> aufgeladen. Dabei sammelt sich auf seinen Platten eine Ladung von <strong>Q = 6,0 &micro;C</strong> an. Berechne die Kapazität C des Kondensators.",
+    given: "U = 150 V &emsp; Q = 6,0 &micro;C",
+    answerSI: 40e-9,
+    primaryValue: 40,
+    primaryUnit: "nF",
+    units: ["pF", "nF", "&micro;F", "F"],
+    unitKeys: ["pF", "nF", "uF", "F"],
+    hints: [
+      "Verwende die Formel: <strong>C = Q / U</strong>",
+      "Einsetzen: C = 6,0 &middot; 10⁻&#8310; C / 150 V &ndash; berechne den Quotienten."
+    ],
+    solutionSteps: [
+      "Gegeben: Q = 6,0 &micro;C = 6,0 &middot; 10⁻&#8310; C, &ensp; U = 150 V",
+      "Formel: C = Q / U",
+      "C = 6,0 &middot; 10⁻&#8310; C / 150 V",
+      "C = 4,0 &middot; 10⁻&#8312; F = 40 &middot; 10⁻&#8313; F",
+      "res:C = 40 nF"
+    ],
+    successMsg: "Perfekt! Die Kapazität stimmt genau &ndash; wir können das Ladegerät fertigstellen."
+  },
+  {
+    title: "Auftrag 2 &ndash; Feldstärke berechnen",
+    customer: "Frau Schmidt, Drucktechnik AG",
+    customerIntro: "In unserer Druckmaschine nutzen wir elektrostatische Aufladung &ndash; ich muss die Feldstärke kennen.",
+    text: "Zwischen den Platten eines Kondensators besteht eine Spannung von <strong>U = 900 V</strong>. Der Plattenabstand beträgt <strong>d = 3,0 cm</strong>. Berechne die elektrische Feldstärke E zwischen den Platten.",
+    given: "U = 900 V &emsp; d = 3,0 cm",
+    answerSI: 30000,
+    primaryValue: 30,
+    primaryUnit: "kV/m",
+    units: ["V/m", "kV/m", "MV/m"],
+    unitKeys: ["V/m", "kV/m", "MV/m"],
+    hints: [
+      "Verwende die Formel: <strong>E = U / d</strong>",
+      "Einsetzen: E = 900 V / 0,03 m = ?"
+    ],
+    solutionSteps: [
+      "Gegeben: U = 900 V, &ensp; d = 3,0 cm = 0,03 m",
+      "Formel: E = U / d",
+      "E = 900 V / 0,03 m = 30 000 V/m",
+      "res:E = 30 kV/m"
+    ],
+    successMsg: "Ausgezeichnet! Mit dieser Feldstärke können wir die Druckwalzen optimal einstellen."
+  },
+  {
+    title: "Auftrag 3 &ndash; Gespeicherte Ladung",
+    customer: "Herr Weber, Ladegeräte GmbH (Folgeauftrag)",
+    customerIntro: "Wir möchten unseren Kondensator jetzt mit höherer Spannung betreiben.",
+    text: "Ein Kondensator hat eine Kapazität von <strong>C = 40 nF</strong>. Er wird auf eine Spannung von <strong>U = 400 V</strong> aufgeladen. Berechne die gespeicherte Ladung Q.",
+    given: "C = 40 nF &emsp; U = 400 V",
+    answerSI: 16e-6,
+    primaryValue: 16,
+    primaryUnit: "&micro;C",
+    units: ["nC", "&micro;C", "mC"],
+    unitKeys: ["nC", "uC", "mC"],
+    hints: [
+      "Stelle die Grundformel um: <strong>Q = C &middot; U</strong>",
+      "Q = 40 &middot; 10⁻&#8313; F &middot; 400 V = ?"
+    ],
+    solutionSteps: [
+      "Gegeben: C = 40 nF = 40 &middot; 10⁻&#8313; F, &ensp; U = 400 V",
+      "Formel: Q = C &middot; U",
+      "Q = 40 &middot; 10⁻&#8313; F &middot; 400 V",
+      "Q = 16 000 &middot; 10⁻&#8313; C = 16 &middot; 10⁻&#8310; C",
+      "res:Q = 16 &micro;C"
+    ],
+    successMsg: "Sehr gut! Die Ladungsmenge passt zu unserer neuen Hochspannungsvariante."
+  },
+  {
+    title: "Auftrag 4 &ndash; Luftkondensator berechnen",
+    customer: "Dr. Yilmaz, SensorTech Startup",
+    customerIntro: "Wir entwickeln einen kapazitiven Sensor und müssen die Kapazität unseres Prototyps berechnen.",
+    text: "Ein luftgefüllter Plattenkondensator hat <strong>quadratische Platten</strong> mit der Seitenlänge <strong>a = 20 cm</strong> und einem Plattenabstand von <strong>d = 2,0 mm</strong>. Berechne die Kapazität C.",
+    given: "a = 20 cm &emsp; d = 2,0 mm &emsp; &epsilon;<sub>r</sub> = 1 (Luft)",
+    answerSI: 177e-12,
+    primaryValue: 177,
+    primaryUnit: "pF",
+    units: ["pF", "nF", "&micro;F", "F"],
+    unitKeys: ["pF", "nF", "uF", "F"],
+    hints: [
+      "Formel: <strong>C = &epsilon;&#8320; &middot; &epsilon;<sub>r</sub> &middot; A / d</strong> mit A = a&sup2;",
+      "A = (0,20 m)&sup2; = 0,04 m&sup2;, dann C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 1 &middot; 0,04 / 0,002"
+    ],
+    solutionSteps: [
+      "Gegeben: a = 20 cm &rarr; A = 0,04 m&sup2;, &ensp; d = 0,002 m, &ensp; &epsilon;<sub>r</sub> = 1",
+      "Formel: C = &epsilon;&#8320; &middot; &epsilon;<sub>r</sub> &middot; A / d",
+      "C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 1 &middot; 0,04 / 0,002",
+      "C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 20 = 177 &middot; 10⁻&sup1;&sup2; F",
+      "res:C = 177 pF"
+    ],
+    successMsg: "Genau richtig! Unser Sensorprototyp ist damit perfekt charakterisiert."
+  },
+  {
+    title: "Auftrag 5 &ndash; Kondensator mit Dielektrikum",
+    customer: "Frau Berger, ElektronikParts AG",
+    customerIntro: "Unser neuer Kondensator hat ein Kunststoff-Dielektrikum &ndash; berechnen Sie die Kapazität.",
+    text: "Ein Kondensator hat eine Plattenfläche von <strong>A = 150 cm&sup2;</strong>, einen Plattenabstand von <strong>d = 1,0 mm</strong> und ein Kunststoff-Dielektrikum mit <strong>&epsilon;<sub>r</sub> = 4,0</strong>. Berechne die Kapazität C.",
+    given: "A = 150 cm&sup2; &emsp; d = 1,0 mm &emsp; &epsilon;<sub>r</sub> = 4,0",
+    answerSI: 531e-12,
+    primaryValue: 531,
+    primaryUnit: "pF",
+    units: ["pF", "nF", "&micro;F", "F"],
+    unitKeys: ["pF", "nF", "uF", "F"],
+    hints: [
+      "Formel: <strong>C = &epsilon;&#8320; &middot; &epsilon;<sub>r</sub> &middot; A / d</strong>",
+      "C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 4,0 &middot; 0,015 / 0,001 = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 60"
+    ],
+    solutionSteps: [
+      "Gegeben: A = 150 cm&sup2; = 0,015 m&sup2;, &ensp; d = 0,001 m, &ensp; &epsilon;<sub>r</sub> = 4,0",
+      "Formel: C = &epsilon;&#8320; &middot; &epsilon;<sub>r</sub> &middot; A / d",
+      "C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 4,0 &middot; 0,015 / 0,001",
+      "C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 60 = 531 &middot; 10⁻&sup1;&sup2; F",
+      "res:C = 531 pF"
+    ],
+    successMsg: "Erstklassig berechnet! Das Dielektrikum zeigt genau den erwarteten Effekt."
+  },
+  {
+    title: "Auftrag 6 &ndash; Plattenfläche berechnen",
+    customer: "Herr Nowak, CeramCap GmbH",
+    customerIntro: "Wir kennen die gewünschte Kapazität und brauchen die nötige Plattenfläche für die Fertigung.",
+    text: "Ein Kondensator mit Keramik-Dielektrikum (<strong>&epsilon;<sub>r</sub> = 8,0</strong>) und einem Plattenabstand von <strong>d = 0,5 mm</strong> soll eine Kapazität von <strong>C = 10 nF</strong> haben. Berechne die benötigte Plattenfläche A.",
+    given: "C = 10 nF &emsp; d = 0,5 mm &emsp; &epsilon;<sub>r</sub> = 8,0",
+    answerSI: 0.0707,
+    primaryValue: 707,
+    primaryUnit: "cm&sup2;",
+    units: ["cm&sup2;", "m&sup2;"],
+    unitKeys: ["cm2", "m2"],
+    hints: [
+      "Stelle die Formel um: C = &epsilon;&#8320; &middot; &epsilon;<sub>r</sub> &middot; A / d &ensp;&rarr;&ensp; <strong>A = C &middot; d / (&epsilon;&#8320; &middot; &epsilon;<sub>r</sub>)</strong>",
+      "A = (10 &middot; 10⁻&#8313; &middot; 5 &middot; 10⁻&#8308;) / (8,85 &middot; 10⁻&sup1;&sup2; &middot; 8,0)"
+    ],
+    solutionSteps: [
+      "Gegeben: C = 10 nF, &ensp; d = 0,5 mm = 5 &middot; 10⁻&#8308; m, &ensp; &epsilon;<sub>r</sub> = 8,0",
+      "Umstellen: A = C &middot; d / (&epsilon;&#8320; &middot; &epsilon;<sub>r</sub>)",
+      "A = (10 &middot; 10⁻&#8313; &middot; 5 &middot; 10⁻&#8308;) / (8,85 &middot; 10⁻&sup1;&sup2; &middot; 8,0)",
+      "A = 5 &middot; 10⁻&sup1;&sup2; / (70,8 &middot; 10⁻&sup1;&sup2;) = 0,0707 m&sup2;",
+      "res:A &asymp; 707 cm&sup2;"
+    ],
+    successMsg: "Hervorragend! Mit dieser Plattenfläche können wir den Kondensator fertigen."
+  },
+  {
+    title: "Auftrag 7 &ndash; Maximale Spannung",
+    customer: "Dr. Klein, Hochspannungslabor",
+    customerIntro: "Bei unserem Kondensator darf eine bestimmte Feldstärke nicht überschritten werden.",
+    text: "Ein Kondensator (Plattenabstand <strong>d = 0,5 mm</strong>) darf maximal einer Feldstärke von <strong>E<sub>max</sub> = 200 kV/m</strong> ausgesetzt werden. Welche <strong>maximale Spannung</strong> U<sub>max</sub> darf angelegt werden?",
+    given: "E<sub>max</sub> = 200 kV/m &emsp; d = 0,5 mm",
+    answerSI: 100,
+    primaryValue: 100,
+    primaryUnit: "V",
+    units: ["mV", "V", "kV"],
+    unitKeys: ["mV", "V", "kV"],
+    hints: [
+      "Stelle die Formel um: E = U / d &ensp;&rarr;&ensp; <strong>U = E &middot; d</strong>",
+      "U = 200 000 V/m &middot; 5 &middot; 10⁻&#8308; m = ?"
+    ],
+    solutionSteps: [
+      "Gegeben: E<sub>max</sub> = 200 kV/m = 200 000 V/m, &ensp; d = 0,5 mm = 5 &middot; 10⁻&#8308; m",
+      "Umstellen: U = E &middot; d",
+      "U<sub>max</sub> = 200 000 V/m &middot; 5 &middot; 10⁻&#8308; m",
+      "res:U<sub>max</sub> = 100 V"
+    ],
+    successMsg: "Danke! Jetzt wissen wir, bis zu welcher Spannung wir sicher arbeiten können."
+  },
+  {
+    title: "Auftrag 8 &ndash; Miniatur-Kondensator",
+    customer: "Frau Torres, AutoTech Zulieferer",
+    customerIntro: "Ein winziger Kondensator in einem Steuergerät &ndash; wie groß ist seine Kapazität?",
+    text: "Ein Kondensator in einem Steuergerät hat folgende Daten: Plattenfläche <strong>A = 5,0 cm&sup2;</strong>, Plattenabstand <strong>d = 0,05 mm</strong>, Dielektrizitätszahl <strong>&epsilon;<sub>r</sub> = 25</strong>. Berechne die Kapazität C.",
+    given: "A = 5,0 cm&sup2; &emsp; d = 0,05 mm &emsp; &epsilon;<sub>r</sub> = 25",
+    answerSI: 2.2125e-9,
+    primaryValue: 2.21,
+    primaryUnit: "nF",
+    units: ["pF", "nF", "&micro;F"],
+    unitKeys: ["pF", "nF", "uF"],
+    hints: [
+      "Formel: <strong>C = &epsilon;&#8320; &middot; &epsilon;<sub>r</sub> &middot; A / d</strong>",
+      "C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 25 &middot; 5,0 &middot; 10⁻&#8308; / (5 &middot; 10⁻&#8309;) &ndash; berechne A/d zuerst!"
+    ],
+    solutionSteps: [
+      "Gegeben: A = 5,0 &middot; 10⁻&#8308; m&sup2;, &ensp; d = 5 &middot; 10⁻&#8309; m, &ensp; &epsilon;<sub>r</sub> = 25",
+      "Formel: C = &epsilon;&#8320; &middot; &epsilon;<sub>r</sub> &middot; A / d",
+      "A / d = 5,0 &middot; 10⁻&#8308; / 5 &middot; 10⁻&#8309; = 10",
+      "C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 25 &middot; 10 = 2212,5 &middot; 10⁻&sup1;&sup2; F",
+      "res:C &asymp; 2,21 nF"
+    ],
+    successMsg: "Beeindruckend! Diese winzige Kapazität steuert ein ganzes Motormanagement."
+  },
+  {
+    title: "Auftrag 9 &ndash; Analyse: Platten zusammenschieben",
+    customer: "Prof. Richter, Technische Universität",
+    customerIntro: "Wir untersuchen, was passiert, wenn ein geladener Kondensator von der Quelle getrennt und dann verändert wird.",
+    text: "Ein luftgefüllter Plattenkondensator (<strong>A = 400 cm&sup2;</strong>, <strong>d = 4,0 mm</strong>) wird auf <strong>U = 2000 V</strong> aufgeladen und dann <strong>von der Spannungsquelle getrennt</strong>. Anschließend werden die Platten auf den halben Abstand <strong>d' = 2,0 mm</strong> zusammengeschoben. Berechne die neue Spannung U', die dann am Kondensator anliegt.",
+    given: "A = 400 cm&sup2; &emsp; d = 4,0 mm &emsp; U = 2000 V &emsp; d' = 2,0 mm &emsp; Quelle getrennt &rarr; Q = const.",
+    answerSI: 1000,
+    primaryValue: 1000,
+    primaryUnit: "V",
+    units: ["mV", "V", "kV"],
+    unitKeys: ["mV", "V", "kV"],
+    hints: [
+      "Da die Quelle getrennt ist, bleibt <strong>Q konstant</strong>. Berechne erst C, dann Q, dann C' und schließlich <strong>U' = Q / C'</strong>.",
+      "C = &epsilon;&#8320; &middot; A / d = 88,5 pF &ensp;&rarr;&ensp; Q = C &middot; U = 177 nC &ensp;&rarr;&ensp; C' = &epsilon;&#8320; &middot; A / d' = 177 pF"
+    ],
+    solutionSteps: [
+      "Schritt 1: C = &epsilon;&#8320; &middot; A / d = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 0,04 / 0,004 = 88,5 pF",
+      "Schritt 2: Q = C &middot; U = 88,5 &middot; 10⁻&sup1;&sup2; &middot; 2000 = 177 nC",
+      "Schritt 3: C' = &epsilon;&#8320; &middot; A / d' = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 0,04 / 0,002 = 177 pF",
+      "Schritt 4: U' = Q / C' = 177 &middot; 10⁻&#8313; / 177 &middot; 10⁻&sup1;&sup2;",
+      "res:U' = 1000 V"
+    ],
+    successMsg: "Brillant gelöst! Die Analyse bei getrennter Quelle ist nicht trivial."
+  },
+  {
+    title: "Auftrag 10 &ndash; Vernetzungsaufgabe",
+    customer: "Herr Park, TeleConnect GmbH",
+    customerIntro: "Bestimmen Sie die gespeicherte Ladung unseres Filterkondensators bei voller Aufladung.",
+    text: "Ein luftgefüllter Plattenkondensator (<strong>A = 0,025 m&sup2;</strong>, <strong>d = 1,0 mm</strong>) wird über einen Widerstand an eine Spannungsquelle mit <strong>U&#8320; = 200 V</strong> angeschlossen. Berechne die Ladung Q, die nach vollständiger Aufladung gespeichert ist.",
+    given: "A = 0,025 m&sup2; &emsp; d = 1,0 mm &emsp; &epsilon;<sub>r</sub> = 1 (Luft) &emsp; U&#8320; = 200 V",
+    answerSI: 44.2e-9,
+    primaryValue: 44.2,
+    primaryUnit: "nC",
+    units: ["nC", "&micro;C", "mC"],
+    unitKeys: ["nC", "uC", "mC"],
+    hints: [
+      "Berechne zuerst die Kapazität: <strong>C = &epsilon;&#8320; &middot; A / d</strong>, dann <strong>Q = C &middot; U</strong>.",
+      "C = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 0,025 / 0,001 = 221,25 pF &ensp;&rarr;&ensp; Q = C &middot; 200 V"
+    ],
+    solutionSteps: [
+      "Schritt 1: C = &epsilon;&#8320; &middot; A / d = 8,85 &middot; 10⁻&sup1;&sup2; &middot; 0,025 / 0,001",
+      "C = 221,25 &middot; 10⁻&sup1;&sup2; F &asymp; 221 pF",
+      "Schritt 2: Q = C &middot; U&#8320; = 221,25 &middot; 10⁻&sup1;&sup2; &middot; 200",
+      "Q = 44 200 &middot; 10⁻&sup1;&sup2; C &asymp; 44,2 &middot; 10⁻&#8313; C",
+      "res:Q &asymp; 44,2 nC"
+    ],
+    successMsg: "Exzellente Arbeit! Die gespeicherte Ladung ist entscheidend für unser Filtersystem."
+  }
+];
+
+// ===== UNIT MULTIPLIERS =====
+const UNIT_SI = {
+  "pF": 1e-12, "nF": 1e-9, "uF": 1e-6, "F": 1,
+  "V/m": 1, "kV/m": 1e3, "MV/m": 1e6,
+  "nC": 1e-9, "uC": 1e-6, "mC": 1e-3,
+  "cm2": 1e-4, "m2": 1,
+  "mV": 1e-3, "V": 1, "kV": 1e3
+};
+
+// ===== GAME STATE =====
+let state = {
+  expert: false,
+  current: 0,
+  score: 0,
+  hintsUsed: 0,
+  hintsThisTask: 0,
+  results: [],
+  timerInterval: null,
+  timerSeconds: 60,
+  countdownInterval: null,
+  answered: false
+};
+
+// ===== START GAME =====
+function startGame() {
+  state.expert = document.getElementById('expertCheck').checked;
+  state.current = 0;
+  state.score = 0;
+  state.hintsUsed = 0;
+  state.results = [];
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.remove('hidden');
+  loadTask();
+}
+
+// ===== LOAD TASK =====
+function loadTask() {
+  const t = TASKS[state.current];
+  state.hintsThisTask = 0;
+  state.answered = false;
+
+  // Progress
+  document.getElementById('progressLabel').textContent = `Auftrag ${state.current + 1} / 10`;
+  document.getElementById('progressFill').style.width = ((state.current + 1) / 10 * 100) + '%';
+  document.getElementById('progressScore').textContent = `${state.score} richtig`;
+
+  // Task content
+  document.getElementById('taskTitle').innerHTML = t.title;
+  document.getElementById('customerIntro').innerHTML = `<strong>${t.customer}:</strong> &bdquo;${t.customerIntro}&ldquo;`;
+  document.getElementById('taskText').innerHTML = t.text;
+  document.getElementById('givenBox').innerHTML = t.given;
+
+  // Unit dropdown
+  const sel = document.getElementById('unitSelect');
+  sel.innerHTML = '';
+  for (let i = 0; i < t.units.length; i++) {
+    const opt = document.createElement('option');
+    opt.value = t.unitKeys[i];
+    opt.innerHTML = t.units[i];
+    sel.appendChild(opt);
+  }
+
+  // Reset input
+  document.getElementById('answerInput').value = '';
+  document.getElementById('answerInput').disabled = false;
+  document.getElementById('unitSelect').disabled = false;
+  document.getElementById('submitBtn').disabled = false;
+
+  // Reset hints
+  document.getElementById('hintBtn1').disabled = false;
+  document.getElementById('hintBtn2').disabled = true;
+  document.getElementById('hintText1').classList.remove('visible');
+  document.getElementById('hintText2').classList.remove('visible');
+  document.getElementById('hintText1').innerHTML = '';
+  document.getElementById('hintText2').innerHTML = '';
+
+  // Reset feedback
+  const fb = document.getElementById('feedbackInline');
+  fb.className = 'feedback-inline';
+  fb.style.display = 'none';
+  fb.innerHTML = '';
+
+  // Expert timer
+  clearInterval(state.timerInterval);
+  const timerEl = document.getElementById('expertTimer');
+  if (state.expert) {
+    timerEl.classList.remove('hidden');
+    state.timerSeconds = 60;
+    timerEl.textContent = '60 s';
+    timerEl.className = 'expert-timer';
+    state.timerInterval = setInterval(tickTimer, 1000);
+  } else {
+    timerEl.classList.add('hidden');
+  }
+
+  // Focus input
+  setTimeout(() => document.getElementById('answerInput').focus(), 100);
+}
+
+// ===== EXPERT TIMER =====
+function tickTimer() {
+  state.timerSeconds--;
+  const el = document.getElementById('expertTimer');
+  el.textContent = state.timerSeconds + ' s';
+  if (state.timerSeconds <= 10) el.className = 'expert-timer danger';
+  else if (state.timerSeconds <= 20) el.className = 'expert-timer warning';
+
+  if (state.timerSeconds <= 0) {
+    clearInterval(state.timerInterval);
+    if (!state.answered) {
+      state.answered = true;
+      state.results.push({ correct: false, task: state.current, timeout: true });
+      disableInput();
+      showSolutionModal();
+    }
+  }
+}
+
+// ===== SHOW HINT =====
+function showHint(n) {
+  const t = TASKS[state.current];
+  if (n === 1) {
+    document.getElementById('hintText1').innerHTML = t.hints[0];
+    document.getElementById('hintText1').classList.add('visible');
+    document.getElementById('hintBtn1').disabled = true;
+    document.getElementById('hintBtn2').disabled = false;
+    state.hintsUsed++;
+    state.hintsThisTask++;
+  } else if (n === 2) {
+    document.getElementById('hintText2').innerHTML = t.hints[1];
+    document.getElementById('hintText2').classList.add('visible');
+    document.getElementById('hintBtn2').disabled = true;
+    state.hintsUsed++;
+    state.hintsThisTask++;
+  }
+}
+
+// ===== SUBMIT =====
+function submitAnswer() {
+  if (state.answered) return;
+  const t = TASKS[state.current];
+  const raw = document.getElementById('answerInput').value.trim().replace(',', '.');
+  if (!raw) { document.getElementById('answerInput').focus(); return; }
+
+  const num = parseFloat(raw);
+  if (isNaN(num)) { document.getElementById('answerInput').focus(); return; }
+
+  const unitKey = document.getElementById('unitSelect').value;
+  const multiplier = UNIT_SI[unitKey];
+  const userSI = num * multiplier;
+  const tolerance = 0.04; // 4% tolerance for rounding
+
+  state.answered = true;
+  clearInterval(state.timerInterval);
+
+  // Check correct (SI match)
+  const relError = Math.abs(userSI - t.answerSI) / Math.abs(t.answerSI);
+  if (relError < tolerance) {
+    // Correct!
+    state.score++;
+    state.results.push({ correct: true, task: state.current });
+    disableInput();
+    showSuccess(t.successMsg);
+    return;
+  }
+
+  // Check right number, wrong unit
+  const numRelError = Math.abs(num - t.primaryValue) / Math.abs(t.primaryValue);
+  if (numRelError < tolerance && unitKey !== t.primaryUnit.replace('&micro;', 'u').replace('&sup2;', '2').replace(/;/g, '')) {
+    // Right number wrong unit
+    state.answered = false; // let them retry
+    clearInterval(state.timerInterval);
+    if (state.expert) {
+      state.timerInterval = setInterval(tickTimer, 1000);
+    }
+    const fb = document.getElementById('feedbackInline');
+    fb.className = 'feedback-inline unit-error';
+    fb.style.display = 'block';
+    fb.innerHTML = 'Rechenweg korrekt &ndash; aber prüfe die Einheit!';
+    return;
+  }
+
+  // Wrong answer
+  state.results.push({ correct: false, task: state.current });
+  disableInput();
+  showSolutionModal();
+}
+
+function disableInput() {
+  document.getElementById('answerInput').disabled = true;
+  document.getElementById('unitSelect').disabled = true;
+  document.getElementById('submitBtn').disabled = true;
+}
+
+// ===== SUCCESS FEEDBACK =====
+function showSuccess(msg) {
+  const fb = document.getElementById('feedbackInline');
+  fb.className = 'feedback-inline success';
+  fb.style.display = 'block';
+  fb.innerHTML = msg;
+  setTimeout(() => nextTask(), 1800);
+}
+
+// ===== SOLUTION MODAL =====
+function showSolutionModal() {
+  const t = TASKS[state.current];
+  const modal = document.getElementById('solutionModal');
+  const stepsEl = document.getElementById('solutionSteps');
+  stepsEl.innerHTML = '';
+
+  t.solutionSteps.forEach(step => {
+    const div = document.createElement('div');
+    if (step.startsWith('res:')) {
+      div.className = 'solution-step result';
+      div.innerHTML = step.substring(4);
+    } else {
+      div.className = 'solution-step';
+      div.innerHTML = step;
+    }
+    stepsEl.appendChild(div);
+  });
+
+  const timeout = state.results[state.results.length - 1] && state.results[state.results.length - 1].timeout;
+  document.getElementById('modalSubtitle').textContent = timeout
+    ? 'Die Zeit ist abgelaufen. Hier ist der vollständige Lösungsweg:'
+    : 'Hier ist der vollständige Lösungsweg:';
+
+  // Countdown
+  let countdown = 10;
+  const countdownEl = document.getElementById('countdownText');
+  const continueBtn = document.getElementById('continueBtn');
+  continueBtn.disabled = true;
+  countdownEl.textContent = `Weiter in ${countdown} Sekunden...`;
+
+  modal.classList.add('visible');
+
+  clearInterval(state.countdownInterval);
+  state.countdownInterval = setInterval(() => {
+    countdown--;
+    if (countdown > 0) {
+      countdownEl.textContent = `Weiter in ${countdown} Sekunden...`;
+    } else {
+      countdownEl.textContent = '';
+      continueBtn.disabled = false;
+      clearInterval(state.countdownInterval);
+    }
+  }, 1000);
+}
+
+// ===== NEXT TASK =====
+function nextTask() {
+  clearInterval(state.countdownInterval);
+  document.getElementById('solutionModal').classList.remove('visible');
+
+  state.current++;
+  if (state.current >= 10) {
+    document.getElementById('gameScreen').classList.add('hidden');
+    if (state.expert) {
+      document.getElementById('bonusScreen').classList.remove('hidden');
+    } else {
+      showEndScreen();
+    }
+    return;
+  }
+  loadTask();
+}
+
+// ===== END SCREEN =====
+function showEndScreen() {
+  document.getElementById('bonusScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.add('hidden');
+  const endEl = document.getElementById('endScreen');
+  endEl.classList.add('visible');
+
+  document.getElementById('endScore').textContent = `${state.score} von 10 Aufträgen korrekt`;
+
+  let rating = '';
+  if (state.score >= 9) rating = 'Hervorragend! Du bist bereit für die Ingenieurprüfung.';
+  else if (state.score >= 7) rating = 'Gut gemacht! Du hast die Grundlagen sicher im Griff.';
+  else if (state.score >= 5) rating = 'Ordentliche Leistung &ndash; an ein paar Stellen gibt es noch Übungsbedarf.';
+  else rating = 'Hier gibt es noch Übungsbedarf &ndash; wiederhole die Formeln und versuche es nochmal.';
+  document.getElementById('endRating').innerHTML = rating;
+
+  // Errors
+  const errorsEl = document.getElementById('endErrors');
+  const wrongResults = state.results.filter(r => !r.correct);
+  if (wrongResults.length > 0) {
+    let html = '<h3>Diese Aufträge solltest du nochmal anschauen:</h3>';
+    wrongResults.forEach(r => {
+      const t = TASKS[r.task];
+      const resultStep = t.solutionSteps.find(s => s.startsWith('res:'));
+      const answer = resultStep ? resultStep.substring(4) : '';
+      html += `<div class="error-item"><strong>${t.title}</strong><br>Korrekte Antwort: <span class="correct-answer">${answer}</span></div>`;
+    });
+    errorsEl.innerHTML = html;
+  } else {
+    errorsEl.innerHTML = '<h3 style="color:var(--green-600)">Alle Aufträge korrekt gelöst!</h3>';
+  }
+
+  document.getElementById('endHints').innerHTML = `Genutzte Hinweise insgesamt: <strong>${state.hintsUsed}</strong>`;
+}
+
+// ===== KEYBOARD =====
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const modal = document.getElementById('solutionModal');
+    if (modal.classList.contains('visible')) {
+      const btn = document.getElementById('continueBtn');
+      if (!btn.disabled) nextTask();
+    } else if (!state.answered && document.getElementById('gameScreen') && !document.getElementById('gameScreen').classList.contains('hidden')) {
+      submitAnswer();
+    }
+  }
+});
+</script>
+</body>
+</html>
